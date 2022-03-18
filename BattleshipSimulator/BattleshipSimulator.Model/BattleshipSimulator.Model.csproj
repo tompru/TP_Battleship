@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Folder Include="Fields\" />
+	  <Folder Include="Algorithms\" />
 	</ItemGroup>
 
 </Project>

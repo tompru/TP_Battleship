@@ -3,7 +3,7 @@ using BattleshipSimulator.Model.Ships.Metadata;
 
 namespace BattleshipSimulator.Model.Ships;
 
-public abstract record Ship
+public abstract class Ship
 {
     protected Ship()
     {

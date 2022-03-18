@@ -1,5 +1,15 @@
-﻿namespace BattleshipSimulator.Model.Board;
+﻿using BattleshipSimulator.Model.Ships;
 
-public record Board
+namespace BattleshipSimulator.Model.Board;
+
+public class Board
 {
+    public Board()
+    {
+        Ships = new BoardShips();
+        Squares = new BoardSquares();
+    }
+
+    public BoardSquares Squares { get; }
+    public BoardShips Ships { get; }
 }

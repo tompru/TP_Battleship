@@ -2,7 +2,7 @@
 
 namespace BattleshipSimulator.Model.Ships;
 
-public record Battleship : Ship
+public class Battleship : Ship
 {
-    public override ShipSize Size => ShipSize.From(Consts.ShipSizes.BattleshipSize);
+    public override ShipSize Size => ShipSize.From(4);
 }
