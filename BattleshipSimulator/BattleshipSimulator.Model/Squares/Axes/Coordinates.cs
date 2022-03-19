@@ -1,4 +1,4 @@
-﻿namespace BattleshipSimulator.Model.Board.Axes;
+﻿namespace BattleshipSimulator.Model.Squares.Axes;
 
 public record Coordinates(Ordinate Ordinate, Abscissa Abscissa)
 {

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BattleshipSimulator.Model.Board;
+using BattleshipSimulator.Model.Boards;
 using FluentAssertions;
 using Xunit;
 

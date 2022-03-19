@@ -1,8 +1,9 @@
-﻿using BattleshipSimulator.Model.Board.Axes;
+﻿using BattleshipSimulator.Model.Boards;
 using BattleshipSimulator.Model.Results;
 using BattleshipSimulator.Model.Ships;
+using BattleshipSimulator.Model.Squares.Axes;
 
-namespace BattleshipSimulator.Model.Board;
+namespace BattleshipSimulator.Model.Squares;
 
 public class BoardSquares
 {

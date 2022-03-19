@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BattleshipSimulator.Model.Board;
-using BattleshipSimulator.Model.Board.Axes;
+using BattleshipSimulator.Model.Boards;
 using BattleshipSimulator.Model.Ships;
+using BattleshipSimulator.Model.Squares;
+using BattleshipSimulator.Model.Squares.Axes;
 using FluentAssertions;
 using Xunit;
 

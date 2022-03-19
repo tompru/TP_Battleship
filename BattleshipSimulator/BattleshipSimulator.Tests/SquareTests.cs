@@ -1,6 +1,6 @@
-﻿using BattleshipSimulator.Model.Board;
-using BattleshipSimulator.Model.Board.Axes;
-using BattleshipSimulator.Model.Ships.Metadata;
+﻿using BattleshipSimulator.Model.Ships.Metadata;
+using BattleshipSimulator.Model.Squares;
+using BattleshipSimulator.Model.Squares.Axes;
 using FluentAssertions;
 using Xunit;
 

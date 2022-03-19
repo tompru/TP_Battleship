@@ -1,5 +1,5 @@
-﻿using BattleshipSimulator.Model.Board.Axes;
-using BattleshipSimulator.Model.Ships.Metadata;
+﻿using BattleshipSimulator.Model.Ships.Metadata;
+using BattleshipSimulator.Model.Squares.Axes;
 
 namespace BattleshipSimulator.Model.Algorithms.ShipsArrange.Extensions;
 

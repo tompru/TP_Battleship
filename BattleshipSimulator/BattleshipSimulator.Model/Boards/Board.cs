@@ -1,8 +1,9 @@
 ﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange;
 using BattleshipSimulator.Model.Results;
 using BattleshipSimulator.Model.Ships;
+using BattleshipSimulator.Model.Squares;
 
-namespace BattleshipSimulator.Model.Board;
+namespace BattleshipSimulator.Model.Boards;
 
 public class Board
 {
