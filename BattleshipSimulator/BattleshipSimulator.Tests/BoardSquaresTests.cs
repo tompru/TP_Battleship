@@ -10,7 +10,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenValuesShouldNotBeEmpty()
     {
-        var boardSquares = new BoardSquares();
+        var boardSquares = new BoardSquares(BoardSize.From(10));
 
         boardSquares.Values.Should().NotBeEmpty();
     }
@@ -18,7 +18,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenValuesShouldContainOnlyUniqueCoordinates()
     {
-        var boardSquares = new BoardSquares();
+        var boardSquares = new BoardSquares(BoardSize.From(10));
 
         var coordinatesHashSet = boardSquares.Values.Select(x => x.Coordinates).ToHashSet();
 
@@ -28,7 +28,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenOrdinatesShouldBeSequential()
     {
-        var boardSquares = new BoardSquares();
+        var boardSquares = new BoardSquares(BoardSize.From(10));
 
         var orderedOrdinatesValues = boardSquares.Values
             .Select(x => (int)x.Coordinates.Ordinate.Value)
@@ -44,7 +44,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenAbscissasShouldBeSequential()
     {
-        var boardSquares = new BoardSquares();
+        var boardSquares = new BoardSquares(BoardSize.From(10));
 
         var orderedOrdinatesValues = boardSquares.Values
             .Select(x => (int)x.Coordinates.Abscissa.Value)

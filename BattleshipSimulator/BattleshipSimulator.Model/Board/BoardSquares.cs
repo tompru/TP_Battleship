@@ -1,21 +1,27 @@
-﻿using BattleshipSimulator.Model.Board.Axes;
+﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange;
+using BattleshipSimulator.Model.Board.Axes;
+using BattleshipSimulator.Model.Ships;
 
 namespace BattleshipSimulator.Model.Board;
 
 public class BoardSquares
 {
-    private const short AxisMinValue = 1;
-    private const short AxisMaxValue = 10;
+    public BoardSquares(BoardSize boardSize)
+    {
+        Values = InitializeBoardSquares(boardSize);
+    }
 
-    public IReadOnlyList<Square> Values { get; } = InitializeBoardSquares();
-    
-    private static List<Square> InitializeBoardSquares()
+    public IReadOnlyList<Square> Values { get; }
+
+    public void PlaceShips(BoardShips ships) => ShipsArranger.ArrangeRandomly(ships, this);
+
+    private static List<Square> InitializeBoardSquares(BoardSize boardSize)
     {
         var boardSquares = new List<Square>();
 
-        for (var ordinate = AxisMinValue; ordinate <= AxisMaxValue; ordinate++)
+        for (short ordinate = 1; ordinate <= boardSize.Value; ordinate++)
         {
-            for (var abscissa = AxisMinValue; abscissa <= AxisMaxValue; abscissa++)
+            for (short abscissa = 1; abscissa <= boardSize.Value; abscissa++)
             {
                 var coordinates = new Coordinates(Ordinate.From(ordinate), Abscissa.From(abscissa));
                 var square = new Square(coordinates);
