@@ -23,7 +23,7 @@ public record Coordinates(Ordinate Ordinate, Abscissa Abscissa)
         var minOrdinate = coordinates.Min(x => x.Ordinate.Value);
         var maxOrdinate = coordinates.Max(x => x.Ordinate.Value);
         var ordinateDiff = maxOrdinate - minOrdinate;
-        var gap = Enumerable.Range(minOrdinate, ordinateDiff - 1);
+        var gap = Enumerable.Range(minOrdinate + 1, ordinateDiff - 1);
         coordinates.AddRange(
             gap.Select(ordinate => new Coordinates(Ordinate.From(ordinate), start.Abscissa)));
 
@@ -37,7 +37,7 @@ public record Coordinates(Ordinate Ordinate, Abscissa Abscissa)
         var minAbscissa = coordinates.Min(x => x.Abscissa.Value);
         var maxAbscissa = coordinates.Max(x => x.Abscissa.Value);
         var abscissaDiff = maxAbscissa - minAbscissa;
-        var gap = Enumerable.Range(minAbscissa, abscissaDiff - 1);
+        var gap = Enumerable.Range(minAbscissa + 1, abscissaDiff - 1);
         coordinates.AddRange(
             gap.Select(abscissa => new Coordinates(start.Ordinate, Abscissa.From(abscissa))));
 

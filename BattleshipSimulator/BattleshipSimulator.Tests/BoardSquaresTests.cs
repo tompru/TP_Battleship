@@ -34,7 +34,7 @@ public class BoardSquaresTests
         var boardSquares = new BoardSquares(BoardSize.From(10));
 
         var orderedOrdinatesValues = boardSquares.Values
-            .Select(x => (int)x.Coordinates.Ordinate.Value)
+            .Select(x => x.Coordinates.Ordinate.Value)
             .OrderBy(x => x)
             .ToHashSet();
 
@@ -50,7 +50,7 @@ public class BoardSquaresTests
         var boardSquares = new BoardSquares(BoardSize.From(10));
 
         var orderedOrdinatesValues = boardSquares.Values
-            .Select(x => (int)x.Coordinates.Abscissa.Value)
+            .Select(x => x.Coordinates.Abscissa.Value)
             .OrderBy(x => x)
             .ToHashSet();
 
@@ -67,7 +67,26 @@ public class BoardSquaresTests
 
         var ship = new Destroyer();
 
-        var result = boardSquares.PlaceShip(new List<Coordinates>(), ship.Id);
+        var result = boardSquares.PlaceShip(new List<Coordinates>(), ship);
+
+        result.Failure.Should().BeTrue();
+    }
+
+    [Fact]
+    public void WhenCoordinatesCount_IsNotEqualToShipSize_ThenShipPlacementShouldFail()
+    {
+        var boardSquares = new BoardSquares(BoardSize.From(10));
+
+        var ship = new Destroyer();
+
+        var coordinates = new List<Coordinates>
+        {
+            new(Ordinate.From(2), Abscissa.From(1)),
+            new(Ordinate.From(3), Abscissa.From(1)),
+            new(Ordinate.From(4), Abscissa.From(1)),
+        };
+
+        var result = boardSquares.PlaceShip(coordinates, ship);
 
         result.Failure.Should().BeTrue();
     }
@@ -84,7 +103,7 @@ public class BoardSquaresTests
             new(Ordinate.From(3), Abscissa.From(1)),
         };
 
-        var result = boardSquares.PlaceShip(coordinates, ship.Id);
+        var result = boardSquares.PlaceShip(coordinates, ship);
         var isShipPlaced = boardSquares.Values
             .Where(square => coordinates.Contains(square.Coordinates))
             .All(x=>x.ShipId == ship.Id);
@@ -113,8 +132,8 @@ public class BoardSquaresTests
             new(Ordinate.From(2), Abscissa.From(2)),
         };
 
-        var firstPlacementResult = boardSquares.PlaceShip(firstDestroyerCoordinates, firstDestroyer.Id);
-        var secondPlacementResult = boardSquares.PlaceShip(secondDestroyerCoordinates, secondDestroyer.Id);
+        var firstPlacementResult = boardSquares.PlaceShip(firstDestroyerCoordinates, firstDestroyer);
+        var secondPlacementResult = boardSquares.PlaceShip(secondDestroyerCoordinates, secondDestroyer);
 
         firstPlacementResult.Success.Should().BeTrue();
         secondPlacementResult.Failure.Should().BeTrue();

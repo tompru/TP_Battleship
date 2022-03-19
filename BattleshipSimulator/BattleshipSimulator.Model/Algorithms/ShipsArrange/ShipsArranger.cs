@@ -17,6 +17,8 @@ internal static class ShipsArranger
         Direction.Down
     };
 
+    private static List<Direction> GetShuffledDirections() => Directions.OrderBy(_ => Random.Next()).ToList();
+
     public static void ArrangeRandomly(BoardShips ships, BoardSquares squares)
     {
         var maxOrdinate = squares.Values.Max(x => x.Coordinates.Ordinate.Value);
@@ -28,7 +30,7 @@ internal static class ShipsArranger
             while (placingShipInProgress)
             {
                 var startCoordinates = PickRandomCoordinates(maxOrdinate, maxAbscissa);
-                foreach (var direction in Directions)
+                foreach (var direction in GetShuffledDirections())
                 {
                     var endCoordinates = startCoordinates.GetEndCoordinates(direction, ship.Size);
                     if (endCoordinates.IsValid(maxOrdinate, maxAbscissa) is false)
@@ -38,13 +40,12 @@ internal static class ShipsArranger
 
                     var coordinates = Coordinates.GetCoordinatesBetween(startCoordinates, endCoordinates);
 
-                    var placeShipResult = squares.PlaceShip(coordinates, ship.Id);
-                    if (placeShipResult.Failure)
+                    var placeShipResult = squares.PlaceShip(coordinates, ship);
+                    if (placeShipResult.Success)
                     {
-                        continue;
+                        placingShipInProgress = false;
+                        break;
                     }
-
-                    placingShipInProgress = false;
                 }
             }
         }

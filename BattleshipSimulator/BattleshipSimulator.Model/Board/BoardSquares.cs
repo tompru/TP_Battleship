@@ -1,6 +1,6 @@
 ﻿using BattleshipSimulator.Model.Board.Axes;
 using BattleshipSimulator.Model.Results;
-using BattleshipSimulator.Model.Ships.Metadata;
+using BattleshipSimulator.Model.Ships;
 
 namespace BattleshipSimulator.Model.Board;
 
@@ -22,12 +22,13 @@ public class BoardSquares
     public bool CheckIfOccupied(Coordinates coordinates) =>
         _valuesDict.TryGetValue(coordinates, out var square) && square.IsOccupied;
 
-    public OperationResult PlaceShip(IEnumerable<Coordinates> coordinates, ShipId shipId)
+    public OperationResult PlaceShip(IEnumerable<Coordinates> coordinates, Ship ship)
     {
         var coordinatesList = coordinates.ToList();
-        if (coordinatesList.Count == 0)
+
+        if (coordinatesList.Count != ship.Size.Value)
         {
-            return new ErrorResult("Coordinates cannot be empty");
+            return new ErrorResult("Coordinates count doesnt equal ship size.");
         }
         if (CheckIfOccupied(coordinatesList))
         {
@@ -37,7 +38,7 @@ public class BoardSquares
         var squaresToPlaceShip = Values.Where(square => coordinatesList.Contains(square.Coordinates));
         foreach (var square in squaresToPlaceShip)
         {
-            square.PlaceShip(shipId);
+            square.PlaceShip(ship.Id);
         }
 
         return new SuccessResult();
