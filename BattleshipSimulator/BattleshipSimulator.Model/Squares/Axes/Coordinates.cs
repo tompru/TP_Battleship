@@ -4,10 +4,10 @@ public record Coordinates(Ordinate Ordinate, Abscissa Abscissa)
 {
     public const int MinAxisValue = 1;
 
-    public bool IsValid(int maxOrdinateValue, int maxAbscissaValue)
+    public bool IsValid(int boardSize)
     {
-        return Ordinate.Value <= maxOrdinateValue && Ordinate.Value >= MinAxisValue &&
-               Abscissa.Value <= maxAbscissaValue && Abscissa.Value >= MinAxisValue;
+        return Ordinate.Value <= boardSize && Ordinate.Value >= MinAxisValue &&
+               Abscissa.Value <= boardSize && Abscissa.Value >= MinAxisValue;
     }
 
     public static List<Coordinates> GetCoordinatesBetween(Coordinates start, Coordinates end) =>
