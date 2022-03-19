@@ -1,4 +1,3 @@
-using System.Linq;
 using BattleshipSimulator.Model.Ships;
 using FluentAssertions;
 using Xunit;
@@ -58,7 +57,7 @@ public class ShipTests
     {
         var ship = new Carrier();
 
-        for (short i = 0; i < ship.Size.Value; i++)
+        for (var i = 0; i < ship.Size.Value; i++)
         {
             ship.Hit();
         }
@@ -71,7 +70,7 @@ public class ShipTests
     {
         var ship = new Carrier();
 
-        for (short i = 0; i < ship.Size.Value; i++)
+        for (var i = 0; i < ship.Size.Value; i++)
         {
             ship.Hit();
         }

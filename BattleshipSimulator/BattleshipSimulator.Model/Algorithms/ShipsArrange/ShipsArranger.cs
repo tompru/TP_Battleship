@@ -1,4 +1,5 @@
-﻿using BattleshipSimulator.Model.Board;
+﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange.Extensions;
+using BattleshipSimulator.Model.Board;
 using BattleshipSimulator.Model.Board.Axes;
 using BattleshipSimulator.Model.Ships;
 
@@ -8,12 +9,12 @@ internal static class ShipsArranger
 {
     private static readonly Random Random = new(Guid.NewGuid().GetHashCode());
 
-    private static readonly List<(Orientation Orientation, Side Side)> Directions = new()
+    private static readonly List<Direction> Directions = new()
     {
-        (Orientation.Horizontal, Side.Left),
-        (Orientation.Horizontal, Side.Right),
-        (Orientation.Vertical, Side.Left),
-        (Orientation.Vertical, Side.Right)
+        Direction.Left,
+        Direction.Right,
+        Direction.Up,
+        Direction.Down
     };
 
     public static void ArrangeRandomly(BoardShips ships, BoardSquares squares)
@@ -23,13 +24,36 @@ internal static class ShipsArranger
 
         foreach (var ship in ships.Values)
         {
+            var placingShipInProgress = true;
+            while (placingShipInProgress)
+            {
+                var startCoordinates = PickRandomCoordinates(maxOrdinate, maxAbscissa);
+                foreach (var direction in Directions)
+                {
+                    var endCoordinates = startCoordinates.GetEndCoordinates(direction, ship.Size);
+                    if (endCoordinates.IsValid(maxOrdinate, maxAbscissa) is false)
+                    {
+                        continue;
+                    }
 
+                    var coordinates = Coordinates.GetCoordinatesBetween(startCoordinates, endCoordinates);
+
+                    var placeShipResult = squares.PlaceShip(coordinates, ship.Id);
+                    if (placeShipResult.Failure)
+                    {
+                        continue;
+                    }
+
+                    placingShipInProgress = false;
+                }
+            }
         }
     }
 
-    private static Ordinate PickStartOrdinate(short maxOrdinate) =>
-        Ordinate.From((short)Random.Next(1, maxOrdinate + 1));
-
-    private static Abscissa PickStartAbscissa(short maxAbscissa) =>
-        Abscissa.From((short)Random.Next(1, maxAbscissa + 1));
+    private static Coordinates PickRandomCoordinates(int maxOrdinate, int maxAbscissa)
+    {
+        var ordinate = Ordinate.From(Random.Next(Coordinates.MinAxisValue, maxOrdinate + 1));
+        var abscissa = Abscissa.From(Random.Next(Coordinates.MinAxisValue, maxAbscissa + 1));
+        return new Coordinates(ordinate, abscissa);
+    }
 }

@@ -1,4 +1,6 @@
-﻿using BattleshipSimulator.Model.Ships;
+﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange;
+using BattleshipSimulator.Model.Results;
+using BattleshipSimulator.Model.Ships;
 
 namespace BattleshipSimulator.Model.Board;
 
@@ -10,9 +12,18 @@ public class Board
     {
         Ships = new BoardShips();
         Squares = new BoardSquares(_size);
-        Squares.PlaceShips(Ships);
     }
 
     public BoardSquares Squares { get; }
     public BoardShips Ships { get; }
+
+    public OperationResult PlaceShips()
+    {
+        if (Squares.Values.Any(x => x.IsOccupied))
+        {
+            return new ErrorResult("Ships are already placed on board.");
+        }
+        ShipsArranger.ArrangeRandomly(Ships, Squares);
+        return new SuccessResult();
+    }
 }

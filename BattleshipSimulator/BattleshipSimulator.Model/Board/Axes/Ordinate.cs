@@ -2,4 +2,4 @@
 
 namespace BattleshipSimulator.Model.Board.Axes;
 
-public record Ordinate(short Value) : ShortValueObject<Ordinate>(Value);
+public record Ordinate(int Value) : IntValueObject<Ordinate>(Value);

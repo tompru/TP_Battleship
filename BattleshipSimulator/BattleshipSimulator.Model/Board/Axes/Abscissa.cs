@@ -2,4 +2,4 @@
 
 namespace BattleshipSimulator.Model.Board.Axes;
 
-public record Abscissa(short Value) : ShortValueObject<Abscissa>(Value);
+public record Abscissa(int Value) : IntValueObject<Abscissa>(Value);

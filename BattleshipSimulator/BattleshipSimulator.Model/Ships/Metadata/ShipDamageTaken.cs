@@ -2,10 +2,10 @@
 
 namespace BattleshipSimulator.Model.Ships.Metadata;
 
-public record ShipDamageTaken(short Value) : ShortValueObject<ShipDamageTaken>(Value)
+public record ShipDamageTaken(int Value) : IntValueObject<ShipDamageTaken>(Value)
 {
-    private const short NoDamage = 0;
-    private const short DamageValue = 1;
+    private const int NoDamage = 0;
+    private const int DamageValue = 1;
 
     public static ShipDamageTaken CreateWithNoDamage()
     {

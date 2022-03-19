@@ -2,4 +2,4 @@
 
 namespace BattleshipSimulator.Model.Ships.Metadata;
 
-public record ShipSize(short Value) : ShortValueObject<ShipSize>(Value);
+public record ShipSize(int Value) : IntValueObject<ShipSize>(Value);

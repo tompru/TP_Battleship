@@ -2,4 +2,4 @@
 
 namespace BattleshipSimulator.Model.Board;
 
-public record BoardSize(short Value) : ShortValueObject<BoardSize>(Value);
+public record BoardSize(int Value) : IntValueObject<BoardSize>(Value);
