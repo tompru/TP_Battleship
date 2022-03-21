@@ -6,7 +6,7 @@ using BattleshipSimulator.Model.Squares.Axes;
 
 namespace BattleshipSimulator.Model.Algorithms.ShipsArrange;
 
-internal static class SquaresShipsArranger
+public class ShipsRandomArranger : IShipArranger
 {
     private static readonly Random Random = new(Guid.NewGuid().GetHashCode());
 
@@ -20,7 +20,7 @@ internal static class SquaresShipsArranger
 
     private static List<Direction> GetShuffledDirections() => Directions.OrderBy(_ => Random.Next()).ToList();
 
-    public static BoardSquares GetSquaresArrangedRandomly(BoardShips ships, BoardSize size)
+    public BoardSquares Arrange(BoardShips ships, BoardSize size)
     {
         var squares = new BoardSquares(size);
 

@@ -6,10 +6,10 @@ namespace BattleshipSimulator.Model.Boards;
 
 public class PrimaryBoard : Board
 {
-    public PrimaryBoard()
+    public PrimaryBoard(IShipArranger arranger)
     {
         Ships = new BoardShips();
-        Squares = SquaresShipsArranger.GetSquaresArrangedRandomly(Ships, Size);
+        Squares = arranger.Arrange(Ships, Size);
     }
 
     public BoardShips Ships { get; }
