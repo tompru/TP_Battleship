@@ -19,7 +19,7 @@ public abstract class Ship
     {
         if (IsSunk)
         {
-            return new ErrorResult("Cannot deal more damage - ship is already sunk");
+            return new ErrorResult("Cannot deal more damage - ship is already sunk.");
         }
         DamageTaken = DamageTaken.IncreaseDamage();
         return new SuccessResult();

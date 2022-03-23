@@ -13,7 +13,7 @@ public class GameTests
     [Fact]
     public void WhenGame_IsCreated_ThenPlayersShouldBeNull()
     {
-        var game = new Game(_arranger);
+        var game = new Game();
 
         game.PlayerA.Should().BeNull();
         game.PlayerB.Should().BeNull();
@@ -22,9 +22,9 @@ public class GameTests
     [Fact]
     public void WhenNewGame_IsSetup_ThenPlayersShouldNotBeNull()
     {
-        var game = new Game(_arranger);
+        var game = new Game();
 
-        var result = game.SetupNewGame();
+        var result = game.SetupNewGame(_arranger);
 
         game.PlayerA.Should().NotBeNull();
         game.PlayerB.Should().NotBeNull();
@@ -33,9 +33,9 @@ public class GameTests
     [Fact]
     public void WhenNewGame_IsSetup_ThenOperationResultShouldSuccess()
     {
-        var game = new Game(_arranger);
+        var game = new Game();
 
-        var result = game.SetupNewGame();
+        var result = game.SetupNewGame(_arranger);
 
         result.Success.Should().BeTrue();
     }
@@ -43,28 +43,12 @@ public class GameTests
     [Fact]
     public void WhenNewGame_IsSetupMultipleTimes_ThenOperationResultShouldSuccess()
     {
-        var game = new Game(_arranger);
+        var game = new Game();
 
-        var firstResult = game.SetupNewGame();
-        var secondResult = game.SetupNewGame();
+        var firstResult = game.SetupNewGame(_arranger);
+        var secondResult = game.SetupNewGame(_arranger);
 
         firstResult.Success.Should().BeTrue();
         secondResult.Success.Should().BeTrue();
-    }
-
-    [Fact]
-    public void WhenNewGame_IsSetupManyTimes_ThenShipsAreArrangedDifferently()
-    {
-        var game = new Game(_arranger);
-
-        game.SetupNewGame();
-        var firstGamePlayerAOccupiedCoordinates =
-            game.PlayerA!.PrimaryBoard.Squares.Values.Where(x => x.IsOccupied).ToList();
-
-        game.SetupNewGame();
-        var secondGamePlayerAOccupiedCoordinates =
-            game.PlayerA!.PrimaryBoard.Squares.Values.Where(x => x.IsOccupied).ToList();
-
-        firstGamePlayerAOccupiedCoordinates.Should().NotBeSameAs(secondGamePlayerAOccupiedCoordinates);
     }
 }

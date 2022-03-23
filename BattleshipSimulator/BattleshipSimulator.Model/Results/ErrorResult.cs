@@ -6,4 +6,12 @@ public class ErrorResult : OperationResult
     {
         Success = false;
     }
-} 
+}
+
+public class ErrorResult<T> : OperationResult<T>
+{
+    public ErrorResult(string message = "") : base(default, message)
+    {
+        Success = false;
+    }
+}

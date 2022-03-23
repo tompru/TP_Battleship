@@ -1,4 +1,7 @@
-﻿namespace BattleshipSimulator.Model.Ships;
+﻿using BattleshipSimulator.Model.Results;
+using BattleshipSimulator.Model.Ships.Metadata;
+
+namespace BattleshipSimulator.Model.Ships;
 
 public class BoardShips
 {
@@ -9,6 +12,17 @@ public class BoardShips
     private const int CarriersCount = 1;
 
     public IReadOnlyList<Ship> Values { get; } = InitializeBoardShips();
+
+    public OperationResult Hit(ShipId shipId)
+    {
+        var ship = Values.SingleOrDefault(x => x.Id == shipId);
+        if (ship is null)
+        {
+            return new ErrorResult($"Ship of Id {shipId.Value} not found.");
+        }
+
+        return ship.Hit();
+    }
 
     private static List<Ship> InitializeBoardShips()
     {

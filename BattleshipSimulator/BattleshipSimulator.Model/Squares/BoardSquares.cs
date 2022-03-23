@@ -17,6 +17,9 @@ public class BoardSquares
 
     public IReadOnlyList<Square> Values { get; }
 
+    public Square? TryGetByCoordinates(Coordinates coordinates) =>
+        _valuesDict.TryGetValue(coordinates, out var square) ? square : default;
+
     public bool CheckIfOccupied(IEnumerable<Coordinates> coordinates) =>
         coordinates.Any(c => CheckIfOccupied(c));
 
@@ -44,7 +47,6 @@ public class BoardSquares
 
         return new SuccessResult();
     }
-
 
     private static List<Square> InitializeBoardSquares(BoardSize boardSize)
     {

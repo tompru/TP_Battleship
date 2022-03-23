@@ -7,3 +7,11 @@ public class SuccessResult : OperationResult
         Success = true;
     }
 }
+
+public class SuccessResult<T> : OperationResult<T>
+{
+    public SuccessResult(T? payload, string message = "") : base(payload, message)
+    {
+        Success = true;
+    }
+}

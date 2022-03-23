@@ -13,6 +13,7 @@ public class Square
     public Coordinates Coordinates { get; }
     public ShipId? ShipId { get; private set; }
     public bool IsOccupied => ShipId is not null;
+    public bool IsMarked { get; private set; }
 
     public OperationResult PlaceShip(ShipId shipId)
     {
@@ -22,6 +23,17 @@ public class Square
         }
 
         ShipId = shipId;
+        return new SuccessResult();
+    }
+
+    public OperationResult Mark()
+    {
+        if (IsMarked)
+        {
+            return new ErrorResult("Field is already marked.");
+        }
+
+        IsMarked = true;
         return new SuccessResult();
     }
 }
