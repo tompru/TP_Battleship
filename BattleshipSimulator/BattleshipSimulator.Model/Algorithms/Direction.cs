@@ -1,4 +1,4 @@
-﻿namespace BattleshipSimulator.Model.Algorithms.ShipsArrange;
+﻿namespace BattleshipSimulator.Model.Algorithms;
 
 internal enum Direction
 {

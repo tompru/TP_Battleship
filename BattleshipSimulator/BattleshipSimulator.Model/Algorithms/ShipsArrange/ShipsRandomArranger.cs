@@ -1,4 +1,4 @@
-﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange.Extensions;
+﻿using BattleshipSimulator.Model.Algorithms.Extensions;
 using BattleshipSimulator.Model.Boards;
 using BattleshipSimulator.Model.Ships;
 using BattleshipSimulator.Model.Squares;
@@ -10,19 +10,11 @@ public class ShipsRandomArranger : IShipArranger
 {
     private static readonly Random Random = new(Guid.NewGuid().GetHashCode());
 
-    private static readonly List<Direction> Directions = new()
-    {
-        Direction.Left,
-        Direction.Right,
-        Direction.Up,
-        Direction.Down
-    };
+    private static List<Direction> GetShuffledDirections() => Consts.Directions.OrderBy(_ => Random.Next()).ToList();
 
-    private static List<Direction> GetShuffledDirections() => Directions.OrderBy(_ => Random.Next()).ToList();
-
-    public BoardSquares Arrange(BoardShips ships, BoardSize size)
+    public PrimaryBoardSquares Arrange(BoardShips ships, BoardSize size)
     {
-        var squares = new BoardSquares(size);
+        var squares = new PrimaryBoardSquares(size);
 
         foreach (var ship in ships.Values)
         {

@@ -14,7 +14,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenValuesShouldNotBeEmpty()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         boardSquares.Values.Should().NotBeEmpty();
     }
@@ -22,7 +22,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenValuesShouldContainOnlyUniqueCoordinates()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         var coordinatesHashSet = boardSquares.Values.Select(x => x.Coordinates).ToHashSet();
 
@@ -32,7 +32,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenOrdinatesShouldBeSequential()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         var orderedOrdinatesValues = boardSquares.Values
             .Select(x => x.Coordinates.Ordinate.Value)
@@ -48,7 +48,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenBoardSquares_IsCreated_ThenAbscissasShouldBeSequential()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         var orderedOrdinatesValues = boardSquares.Values
             .Select(x => x.Coordinates.Abscissa.Value)
@@ -64,7 +64,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenCoordinates_AreEmpty_ThenShipPlacementShouldFail()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         var ship = new Destroyer();
 
@@ -76,7 +76,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenCoordinatesCount_IsNotEqualToShipSize_ThenShipPlacementShouldFail()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         var ship = new Destroyer();
 
@@ -95,7 +95,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenSquares_AreNotOccupied_ThenShipPlacementShouldSuccess()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         var ship = new Destroyer();
         var coordinates = new List<Coordinates>
@@ -117,7 +117,7 @@ public class BoardSquaresTests
     [Fact]
     public void WhenAtLeastOneOfSquares_IsOccupied_ThenShipPlacementShouldFail()
     {
-        var boardSquares = new BoardSquares(BoardSize.From(10));
+        var boardSquares = new PrimaryBoardSquares(BoardSize.From(10));
 
         var firstDestroyer = new Destroyer();
         var firstDestroyerCoordinates = new List<Coordinates>

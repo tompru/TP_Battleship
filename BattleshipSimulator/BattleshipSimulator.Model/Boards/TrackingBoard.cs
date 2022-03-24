@@ -1,4 +1,5 @@
-﻿using BattleshipSimulator.Model.Results;
+﻿using BattleshipSimulator.Model.Algorithms.HitPropability;
+using BattleshipSimulator.Model.Results;
 using BattleshipSimulator.Model.Ships;
 using BattleshipSimulator.Model.Ships.Metadata;
 using BattleshipSimulator.Model.Squares;
@@ -8,14 +9,18 @@ namespace BattleshipSimulator.Model.Boards;
 
 public sealed class TrackingBoard : Board
 {
+    private readonly IHitPropabilityCalculator _hitPropabilityCalculator;
+    private readonly TrackingBoardSquares _squares;
+
     private BoardShips? _enemyShips;
 
-    public TrackingBoard()
-    {
-        Squares = new BoardSquares(Size);
-    }
+    public IReadOnlyList<CoordinatesHitPropability>? HitPropabilities { get; private set; }
 
-    protected override BoardSquares Squares { get; }
+    public TrackingBoard(IHitPropabilityCalculator hitPropabilityCalculator)
+    {
+        _squares = new TrackingBoardSquares(Size);
+        _hitPropabilityCalculator = hitPropabilityCalculator;
+    }
 
     public OperationResult SetupEnemyShips(BoardShips enemyShips)
     {
@@ -29,10 +34,21 @@ public sealed class TrackingBoard : Board
 
     public OperationResult<Coordinates> GetCoordinatesToAttack()
     {
-#warning TODO: algorythm of picking coordinates to attack
-        var coordinares = new Coordinates(Ordinate.From(1), Abscissa.From(1));
+        if (_enemyShips is null)
+        {
+            return new ErrorResult<Coordinates>("Enemy ships are not setup yet.");
+        }
 
-        var square = Squares.TryGetByCoordinates(coordinares);
+        HitPropabilities = _hitPropabilityCalculator.Calculate(_enemyShips, _squares);
+
+        var maxPropability = HitPropabilities.Max(x => x.HitPropability.Value);
+        var shuffledCoordinatesWithMaxPropability = HitPropabilities
+            .Where(x => x.HitPropability.Value == maxPropability)
+            .OrderBy(_ => Guid.NewGuid());
+
+        var coordinares = shuffledCoordinatesWithMaxPropability.First().Coordinates;
+
+        var square = _squares.TryGetByCoordinates(coordinares);
         if (square is null)
         {
             return new ErrorResult<Coordinates>($"Square of coordinates {coordinares} not found.");
@@ -43,7 +59,7 @@ public sealed class TrackingBoard : Board
 
     public OperationResult MarkAttackedField(Coordinates attackedCoordinates, ShipId? attackedShipId)
     {
-        var square = Squares.TryGetByCoordinates(attackedCoordinates);
+        var square = _squares.TryGetByCoordinates(attackedCoordinates);
         if (square is null)
         {
             return new ErrorResult<Coordinates>($"Square of coordinates {attackedCoordinates} not found.");
@@ -70,6 +86,6 @@ public sealed class TrackingBoard : Board
             return placeShipResult;
         }
 
-        return _enemyShips!.Hit(attackedShipId);
+        return new SuccessResult();
     }
 }

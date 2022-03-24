@@ -6,5 +6,5 @@ namespace BattleshipSimulator.Model.Algorithms.ShipsArrange;
 
 public interface IShipArranger
 {
-    BoardSquares Arrange(BoardShips ships, BoardSize size);
+    PrimaryBoardSquares Arrange(BoardShips ships, BoardSize size);
 }

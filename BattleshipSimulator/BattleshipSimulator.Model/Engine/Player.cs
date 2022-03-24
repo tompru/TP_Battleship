@@ -1,4 +1,5 @@
-﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange;
+﻿using BattleshipSimulator.Model.Algorithms.HitPropability;
+using BattleshipSimulator.Model.Algorithms.ShipsArrange;
 using BattleshipSimulator.Model.Boards;
 using BattleshipSimulator.Model.Results;
 
@@ -6,10 +7,10 @@ namespace BattleshipSimulator.Model.Engine;
 
 public class Player
 {
-    public Player(IShipArranger arranger)
+    public Player(IShipArranger arranger, IHitPropabilityCalculator shootPicker)
     {
         PrimaryBoard = new PrimaryBoard(arranger);
-        TrackingBoard = new TrackingBoard();
+        TrackingBoard = new TrackingBoard(shootPicker);
     }
 
     public PrimaryBoard PrimaryBoard { get; }

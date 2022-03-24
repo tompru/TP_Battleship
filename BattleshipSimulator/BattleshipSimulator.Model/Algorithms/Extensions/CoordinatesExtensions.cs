@@ -1,7 +1,7 @@
 ﻿using BattleshipSimulator.Model.Ships.Metadata;
 using BattleshipSimulator.Model.Squares.Axes;
 
-namespace BattleshipSimulator.Model.Algorithms.ShipsArrange.Extensions;
+namespace BattleshipSimulator.Model.Algorithms.Extensions;
 
 internal static class CoordinatesExtensions
 {

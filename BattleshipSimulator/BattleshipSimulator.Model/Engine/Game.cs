@@ -1,4 +1,5 @@
-﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange;
+﻿using BattleshipSimulator.Model.Algorithms.HitPropability;
+using BattleshipSimulator.Model.Algorithms.ShipsArrange;
 using BattleshipSimulator.Model.Results;
 
 namespace BattleshipSimulator.Model.Engine;
@@ -8,10 +9,10 @@ public class Game
     public Player? PlayerA { get; private set; }
     public Player? PlayerB { get; private set; }
 
-    public OperationResult SetupNewGame(IShipArranger arranger)
+    public OperationResult SetupNewGame(IShipArranger arranger, IHitPropabilityCalculator shootPicker)
     {
-        PlayerA = new Player(arranger);
-        PlayerB = new Player(arranger);
+        PlayerA = new Player(arranger, shootPicker);
+        PlayerB = new Player(arranger, shootPicker);
         var firstPlayerSetupResult = PlayerA.TrackingBoard.SetupEnemyShips(PlayerB.PrimaryBoard.Ships);
         if (firstPlayerSetupResult.Failure)
         {
@@ -32,15 +33,15 @@ public class Game
             return new ErrorResult("Game is not setup yet.");
         }
 
+        if (PlayerA.HasLost || PlayerB.HasLost)
+        {
+            return new ErrorResult("One of players already won the game.");
+        }
+
         var firstPlayerResult = PlayerA.PlayRound(PlayerB.PrimaryBoard);
         if (firstPlayerResult.Failure)
         {
             return firstPlayerResult;
-        }
-
-        if (PlayerB.HasLost)
-        {
-            return new SuccessResult();
         }
 
         var secondPlayerResult = PlayerB.PlayRound(PlayerA.PrimaryBoard);
