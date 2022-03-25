@@ -93,7 +93,7 @@ public class GameTests
                 playRoundsSuccess = false;
             }
             playedRounds++;
-            if (game.PlayerB!.HasLost || game.PlayerA!.HasLost)
+            if (game.IsOver)
             {
                 break;
             }

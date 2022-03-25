@@ -1,0 +1,11 @@
+﻿@using BattleshipSimulator.Model.Engine
+@namespace BattleshipSimulator.Panel.Components.Player
+
+<PlayerTrackingBoard Board="@Player.TrackingBoard" />
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public Player Player { get; set; } = null!;
+}

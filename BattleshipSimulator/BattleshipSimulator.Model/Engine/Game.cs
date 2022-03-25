@@ -9,6 +9,8 @@ public class Game
     public Player? PlayerA { get; private set; }
     public Player? PlayerB { get; private set; }
 
+    public bool IsOver => (PlayerB?.HasLost ?? false) || (PlayerA?.HasLost ?? false);
+
     public OperationResult SetupNewGame(IShipArranger arranger, IHitPropabilityCalculator shootPicker)
     {
         PlayerA = new Player(arranger, shootPicker);

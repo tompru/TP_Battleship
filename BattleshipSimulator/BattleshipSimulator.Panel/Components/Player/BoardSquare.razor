@@ -1,0 +1,27 @@
+﻿@namespace BattleshipSimulator.Panel.Components.Player
+
+<div class="d-flex flex-column align-items-center">
+    @if (IsMarked is false)
+    {
+        <small>@ChanceToHit.ToString("P2")</small>
+    }
+    else
+    {
+        <input checked="@IsOccupied"
+               type="checkbox"
+               disabled="@true"
+               class="checkbox-round" />
+    }
+</div>
+@code {
+    [Parameter]
+    [EditorRequired]
+    public bool IsMarked { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public bool IsOccupied { get; set; }
+
+    [Parameter]
+    public decimal ChanceToHit { get; set; }
+}

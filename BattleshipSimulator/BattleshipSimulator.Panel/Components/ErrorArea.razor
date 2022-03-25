@@ -1,0 +1,16 @@
+﻿@if (IsVisible)
+{
+    <div class="alert alert-danger">
+        <h5 class="alert-heading">Error!</h5>
+        @ErrorMessage
+    </div>
+}
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public string? ErrorMessage { get; set; }
+
+    [Parameter]
+    public bool IsVisible { get; set; } = true;
+}

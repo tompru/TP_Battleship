@@ -1,0 +1,84 @@
+﻿@page "/"
+@using BattleshipSimulator.Model.Engine
+@using BattleshipSimulator.Panel.Data
+@using BattleshipSimulator.Panel.Components
+@using BattleshipSimulator.Panel.Components.Player
+@inject GameService _gameService
+
+<PageTitle>Battleship Simulator</PageTitle>
+
+<p class="display-6">Battleship Simulator</p>
+
+<div class="d-flex justify-content-between mb-3">
+    <div>
+        <BaseButton Class="btn btn-primary me-2"
+                    Text="Next Round"
+                    Disabled="_game.IsOver || _autoMode"
+                    OnClick="PlayNextRound">
+        </BaseButton>
+        <BaseButton Class="btn btn-outline-primary"
+                    Text="Play to the end"
+                    Disabled="_game.IsOver || _autoMode"
+                    OnClick="PlayToTheEnd">
+        </BaseButton>
+    </div>
+
+    <BaseButton Class="btn btn-warning"
+                Text="Setup new game"
+                OnClick="SetupNewGame"
+                Disabled="_autoMode">
+    </BaseButton>
+</div>
+
+
+<div class="d-flex gap-3 justify-content-center">
+    <PlayerPanel Player="_game.PlayerA"></PlayerPanel>
+    <PlayerPanel Player="_game.PlayerB"></PlayerPanel>
+</div>
+
+<div class="mt-3">
+    <ErrorArea ErrorMessage="@_errorMessage" IsVisible="_errorMessage is not null" />
+</div>
+
+@code
+{
+    private readonly Game _game = new Game();
+    private string? _errorMessage;
+    private bool _autoMode;
+
+    protected override void OnInitialized() => SetupNewGame();
+
+    private void SetupNewGame()
+    {
+        _gameService.SetupNewGame(_game);
+        _errorMessage = null;
+        StateHasChanged();
+    }
+
+    private void PlayNextRound()
+    {
+        var result = _gameService.NextRound(_game);
+        if (result.Failure)
+        {
+            _errorMessage = result.Message;
+        }
+    }
+
+    private async Task PlayToTheEnd()
+    {
+        _autoMode = true;
+        while (_game.IsOver is false)
+        {
+            var result = _gameService.NextRound(_game);
+            if (result.Failure)
+            {
+                _errorMessage = result.Message;
+                break;
+            }
+
+            await Task.Delay(300);
+            StateHasChanged();
+        }
+        _autoMode = false;
+    }
+}

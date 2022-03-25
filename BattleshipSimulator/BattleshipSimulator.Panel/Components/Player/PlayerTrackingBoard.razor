@@ -1,0 +1,52 @@
+﻿@namespace BattleshipSimulator.Panel.Components.Player
+
+@using BattleshipSimulator.Model.Boards
+@using BattleshipSimulator.Model.Squares
+
+<table class="table-fixed table-bordered border-primary text-center">
+    <thead>
+        <tr>
+            <th class="board-cell"></th>
+            @foreach (var header in _colHeaders)
+            {
+                <th class="user-select-none">@header</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (ordinate, squares) in _squaresByOrdinatesDict)
+        {
+            <tr>
+                <th class="board-cell user-select-none">@ordinate</th>
+                @foreach (var square in squares)
+                {
+                    var chanceToHit = Board.HitPropabilities?
+                        .First(x => x.Coordinates == square.Coordinates).HitPropability.Value ?? default;
+                    <td>
+                        <BoardSquare IsMarked="@square.IsMarked"
+                             IsOccupied="@square.IsOccupied"
+                             ChanceToHit="@chanceToHit" />
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public TrackingBoard Board { get; set; } = null!;
+
+    private Dictionary<int, List<Square>> _squaresByOrdinatesDict = new();
+    private List<char> _colHeaders = new();
+
+    protected override void OnParametersSet()
+    {
+        _squaresByOrdinatesDict = Board.Squares.Values
+            .GroupBy(x => x.Coordinates.Ordinate.Value)
+            .ToDictionary(x => x.Key, x => x.ToList());
+        _colHeaders = Enumerable.Range('A', _squaresByOrdinatesDict.Keys.Count).Select(x => (char)x).ToList();
+    }
+}

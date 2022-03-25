@@ -11,7 +11,14 @@ public class DummyHitPropabilityCalculator : IHitPropabilityCalculator
     {
         var notMarkedSquares = boardSquares.Values.Where(x => x.IsMarked is false).ToList();
         var notSunkEnemyShips = enemyShips.Values.Where(x => x.IsSunk is false).ToList();
-        
+
+        if (notMarkedSquares.Count == 0)
+        {
+            return boardSquares.Values
+                .Select(x => new CoordinatesHitPropability(x.Coordinates, HitPropability.Zero()))
+                .ToList();
+        }
+
         var hitPropability = HitPropability.From(
             (decimal)notSunkEnemyShips.Sum(x => x.Size.Value - x.DamageTaken.Value) / notMarkedSquares.Count);
 
