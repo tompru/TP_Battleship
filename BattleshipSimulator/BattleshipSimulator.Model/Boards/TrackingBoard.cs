@@ -10,9 +10,7 @@ namespace BattleshipSimulator.Model.Boards;
 public sealed class TrackingBoard : Board
 {
     private readonly IHitPropabilityCalculator _hitPropabilityCalculator;
-
-    private BoardShips? _enemyShips;
-
+    
     public IReadOnlyList<CoordinatesHitPropability>? HitPropabilities { get; private set; }
 
     public TrackingBoard(IHitPropabilityCalculator hitPropabilityCalculator)
@@ -22,21 +20,25 @@ public sealed class TrackingBoard : Board
     }
 
     public TrackingBoardSquares Squares { get; }
+    public BoardShips? EnemyShips { get; private set; }
+
+    public int GetEnemyShipsTotalSize() => EnemyShips?.Values.Sum(x => x.Size.Value) ?? default;
+    public int GetEnemyShipsTotalDamageTaken() => EnemyShips?.Values.Sum(x => x.DamageTaken.Value) ?? default;
 
     public OperationResult SetupEnemyShips(BoardShips enemyShips)
     {
-        if (_enemyShips is not null)
+        if (EnemyShips is not null)
         {
             return new ErrorResult("Enemy ships are already setup on tracking board.");
         }
-        _enemyShips = enemyShips;
-        HitPropabilities = _hitPropabilityCalculator.Calculate(_enemyShips, Squares);
+        EnemyShips = enemyShips;
+        HitPropabilities = _hitPropabilityCalculator.Calculate(EnemyShips, Squares);
         return new SuccessResult();
     }
 
     public OperationResult<Coordinates> GetCoordinatesToAttack()
     {
-        if (_enemyShips is null)
+        if (EnemyShips is null)
         {
             return new ErrorResult<Coordinates>("Enemy ships are not setup yet.");
         }
@@ -70,7 +72,7 @@ public sealed class TrackingBoard : Board
             return new ErrorResult<Coordinates>($"Error on marking square on tracking board ({attackedCoordinates}) : {markSquareResult.Message}");
         }
 
-        HitPropabilities = _hitPropabilityCalculator.Calculate(_enemyShips!, Squares);
+        HitPropabilities = _hitPropabilityCalculator.Calculate(EnemyShips!, Squares);
 
         return TryPlaceAttackedShipOnSquare(square, attackedShipId);
     }

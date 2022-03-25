@@ -1,0 +1,40 @@
+﻿<Card Class="@($"{Class} {GetBackgroundClass(PlayerStatus)}")">
+    <div class="d-flex justify-content-between">
+        <h6>@PlayerName</h6>
+        @if (PlayerStatus is not PlayerStatus.Playing)
+        {
+            <h6 class="fw-bolder">[@PlayerStatus]</h6>
+        }
+    </div>
+    Enemy ships damage taken: <span class="fw-bolder">@EnemyShipsTotalDamageTaken/@EnemyShipsTotalSize</span>
+</Card>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public int EnemyShipsTotalSize { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public int EnemyShipsTotalDamageTaken { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public string? PlayerName { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public PlayerStatus PlayerStatus { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    public string GetBackgroundClass(PlayerStatus status) => status switch
+    {
+        PlayerStatus.Playing => Consts.ColorClasses.LightBlue,
+        PlayerStatus.Lost => Consts.ColorClasses.LightRed,
+        PlayerStatus.Won => Consts.ColorClasses.LightGreen,
+        _ => string.Empty
+    };
+}

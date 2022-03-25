@@ -3,6 +3,7 @@
 @using BattleshipSimulator.Panel.Data
 @using BattleshipSimulator.Panel.Components
 @using BattleshipSimulator.Panel.Components.Player
+
 @inject GameService _gameService
 
 <PageTitle>Battleship Simulator</PageTitle>
@@ -10,30 +11,32 @@
 <p class="display-6">Battleship Simulator</p>
 
 <div class="d-flex justify-content-between mb-3">
-    <div>
-        <BaseButton Class="btn btn-primary me-2"
+    <div class="d-flex gap-2">
+        <BaseButton Class="btn btn-primary"
                     Text="Next Round"
                     Disabled="_game.IsOver || _autoMode"
-                    OnClick="PlayNextRound">
-        </BaseButton>
+                    OnClick="PlayNextRound" />
         <BaseButton Class="btn btn-outline-primary"
                     Text="Play to the end"
                     Disabled="_game.IsOver || _autoMode"
-                    OnClick="PlayToTheEnd">
-        </BaseButton>
+                    OnClick="PlayToTheEnd" />
+        @if (_autoMode)
+        {
+            <BaseButton Class="btn btn-danger"
+                        Text="Pause"
+                        OnClick="() => _autoMode = false" />
+        }
     </div>
-
     <BaseButton Class="btn btn-warning"
                 Text="Setup new game"
                 OnClick="SetupNewGame"
-                Disabled="_autoMode">
-    </BaseButton>
+                Disabled="_autoMode" />
 </div>
 
 
 <div class="d-flex gap-3 justify-content-center">
-    <PlayerPanel Player="_game.PlayerA"></PlayerPanel>
-    <PlayerPanel Player="_game.PlayerB"></PlayerPanel>
+    <PlayerPanel Player="_game.PlayerA" PlayerName="Player A" IsGameOver="_game.IsOver" />
+    <PlayerPanel Player="_game.PlayerB" PlayerName="Player B" IsGameOver="_game.IsOver" />
 </div>
 
 <div class="mt-3">
@@ -42,7 +45,7 @@
 
 @code
 {
-    private readonly Game _game = new Game();
+    private readonly Game _game = new();
     private string? _errorMessage;
     private bool _autoMode;
 
@@ -67,7 +70,7 @@
     private async Task PlayToTheEnd()
     {
         _autoMode = true;
-        while (_game.IsOver is false)
+        while (_game.IsOver is false && _autoMode)
         {
             var result = _gameService.NextRound(_game);
             if (result.Failure)

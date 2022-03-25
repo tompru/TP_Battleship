@@ -9,18 +9,18 @@ namespace BattleshipSimulator.Model.Boards;
 
 public sealed class PrimaryBoard : Board
 {
+    private readonly PrimaryBoardSquares _squares;
     public PrimaryBoard(IShipArranger arranger)
     {
         Ships = new BoardShips();
-        Squares = arranger.Arrange(Ships, Size);
+        _squares = arranger.Arrange(Ships, Size);
     }
 
     public BoardShips Ships { get; }
-    public PrimaryBoardSquares Squares { get; }
 
     public OperationResult<ShipId?> MarkHit(Coordinates coordinates)
     {
-        var field = Squares.TryGetByCoordinates(coordinates);
+        var field = _squares.TryGetByCoordinates(coordinates);
         if (field is null)
         {
             return new ErrorResult<ShipId?>($"Square of coordinates {coordinates} not found.");

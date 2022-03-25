@@ -1,11 +1,34 @@
 ﻿@using BattleshipSimulator.Model.Engine
 @namespace BattleshipSimulator.Panel.Components.Player
 
-<PlayerTrackingBoard Board="@Player.TrackingBoard" />
+<Card>
+    <PlayerSummary Class="mb-3"
+                   PlayerName="@PlayerName"
+                   PlayerStatus="GetPlayerStatus()"
+                   EnemyShipsTotalDamageTaken="@Player.TrackingBoard.GetEnemyShipsTotalDamageTaken()"
+                   EnemyShipsTotalSize="@Player.TrackingBoard.GetEnemyShipsTotalSize()"/>
+    <PlayerTrackingBoard Board="@Player.TrackingBoard" />
+</Card>
 
 @code {
-
     [Parameter]
     [EditorRequired]
     public Player Player { get; set; } = null!;
+
+    [Parameter]
+    [EditorRequired]
+    public string PlayerName { get; set; } = null!;
+
+    [Parameter]
+    [EditorRequired]
+    public bool IsGameOver { get; set; }
+
+    private PlayerStatus GetPlayerStatus()
+    {
+        if (IsGameOver is false)
+        {
+            return PlayerStatus.Playing;
+        }
+        return Player.HasLost ? PlayerStatus.Lost : PlayerStatus.Won;
+    }
 }
