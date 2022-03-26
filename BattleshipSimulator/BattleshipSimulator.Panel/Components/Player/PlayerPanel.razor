@@ -1,13 +1,23 @@
 ﻿@using BattleshipSimulator.Model.Engine
+@using BattleshipSimulator.Panel.Data
 @namespace BattleshipSimulator.Panel.Components.Player
 
+@inject EnemyShipsService _enemyShipsService
+
 <Card>
-    <PlayerSummary Class="mb-3"
-                   PlayerName="@PlayerName"
-                   PlayerStatus="GetPlayerStatus()"
-                   EnemyShipsTotalDamageTaken="@Player.TrackingBoard.GetEnemyShipsTotalDamageTaken()"
-                   EnemyShipsTotalSize="@Player.TrackingBoard.GetEnemyShipsTotalSize()"/>
-    <PlayerTrackingBoard Board="@Player.TrackingBoard" />
+    <div class="d-flex flex-column">
+        <PlayerSummary Class="mb-3"
+                       PlayerName="@PlayerName"
+                       PlayerStatus="GetPlayerStatus()"
+                       EnemyShipsTotalDamageTaken="@_enemyShipsService.GetTotalDamageTaken(Player.TrackingBoard.EnemyShips)"
+                       EnemyShipsTotalSize="@_enemyShipsService.GetTotalSize(Player.TrackingBoard.EnemyShips)"/>
+        <div class="d-flex gap-2">
+            <PlayerTrackingBoard Board="@Player.TrackingBoard"/>
+            <div class="align-self-center">
+                <EnemyShipsLeft DataSource="@_enemyShipsService.GetSummary(Player.TrackingBoard.EnemyShips)"/>
+            </div>
+        </div>
+    </div>
 </Card>
 
 @code {

@@ -22,9 +22,6 @@ public sealed class TrackingBoard : Board
     public TrackingBoardSquares Squares { get; }
     public BoardShips? EnemyShips { get; private set; }
 
-    public int GetEnemyShipsTotalSize() => EnemyShips?.Values.Sum(x => x.Size.Value) ?? default;
-    public int GetEnemyShipsTotalDamageTaken() => EnemyShips?.Values.Sum(x => x.DamageTaken.Value) ?? default;
-
     public OperationResult SetupEnemyShips(BoardShips enemyShips)
     {
         if (EnemyShips is not null)

@@ -1,9 +1,11 @@
-﻿<Card Class="@($"{Class} {GetBackgroundClass(PlayerStatus)}")">
+﻿@namespace BattleshipSimulator.Panel.Components.Player
+
+<Card Class="@($"{Class} {GetBackgroundClass(PlayerStatus)}")">
     <div class="d-flex justify-content-between">
-        <h6>@PlayerName</h6>
+        <h5>@PlayerName</h5>
         @if (PlayerStatus is not PlayerStatus.Playing)
         {
-            <h6 class="fw-bolder">[@PlayerStatus]</h6>
+            <h4 class="fw-bolder">[@PlayerStatus]</h4>
         }
     </div>
     Enemy ships damage taken: <span class="fw-bolder">@EnemyShipsTotalDamageTaken/@EnemyShipsTotalSize</span>

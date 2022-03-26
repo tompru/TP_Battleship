@@ -12,5 +12,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddTransient<IHitPropabilityCalculator, DummyHitPropabilityCalculator>();
 builder.Services.AddTransient<IShipArranger, ShipsRandomArranger>();
 builder.Services.AddTransient<GameService>();
+builder.Services.AddTransient<EnemyShipsService>();
 
 await builder.Build().RunAsync();

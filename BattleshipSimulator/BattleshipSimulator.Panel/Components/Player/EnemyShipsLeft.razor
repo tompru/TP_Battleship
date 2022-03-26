@@ -1,0 +1,23 @@
+﻿@using BattleshipSimulator.Panel.Data
+@using BattleshipSimulator.Model.Ships
+@namespace BattleshipSimulator.Panel.Components.Player
+
+@inject EnemyShipsService _enemyShipsService
+
+<Card>
+    <p class="text-nowrap fw-bold">Enemy ships left:</p>
+    @foreach (var item in DataSource)
+    {
+        <span class="d-flex justify-content-between">
+            <div>@item.ShipName</div>
+            <div>@($"{item.ShipsLeft}/{item.ShipsInitCount}")</div>
+        </span>
+        <span class="mb-1">@(new string('*', item.ShipSize))</span>
+    }
+</Card>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public IReadOnlyList<EnemyShipSummaryModel> DataSource { get; set; } = null!;
+}

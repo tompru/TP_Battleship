@@ -3,8 +3,9 @@
 @using BattleshipSimulator.Model.Boards
 @using BattleshipSimulator.Model.Squares
 
-<table class="table-fixed table-bordered border-primary text-center">
-    <thead>
+<Card>
+    <table class="table-fixed table-bordered border-primary text-center">
+        <thead>
         <tr>
             <th class="board-cell"></th>
             @foreach (var header in _colHeaders)
@@ -12,8 +13,8 @@
                 <th class="user-select-none">@header</th>
             }
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach (var (ordinate, squares) in _squaresByOrdinatesDict)
         {
             <tr>
@@ -24,14 +25,15 @@
                         .First(x => x.Coordinates == square.Coordinates).HitPropability.Value ?? default;
                     <td>
                         <BoardSquare IsMarked="@square.IsMarked"
-                             IsOccupied="@square.IsOccupied"
-                             ChanceToHit="@chanceToHit" />
+                                     IsOccupied="@square.IsOccupied"
+                                     ChanceToHit="@chanceToHit" />
                     </td>
                 }
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</Card>
 
 @code {
 
