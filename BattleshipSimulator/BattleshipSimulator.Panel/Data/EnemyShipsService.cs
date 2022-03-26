@@ -1,4 +1,5 @@
 ﻿using BattleshipSimulator.Model.Ships;
+using BattleshipSimulator.Model.Ships.Metadata;
 
 namespace BattleshipSimulator.Panel.Data;
 
@@ -8,6 +9,17 @@ public class EnemyShipsService
         enemyShips?.Values.Sum(x => x.Size.Value) ?? default;
     public int GetTotalDamageTaken(BoardShips? enemyShips) =>
         enemyShips?.Values.Sum(x => x.DamageTaken.Value) ?? default;
+
+    public bool CheckIfShipIsSunk(BoardShips? enemyShips, ShipId? shipId)
+    {
+        if (shipId is null || enemyShips is null)
+        {
+            return false;
+        }
+
+        var sunkShipIds = enemyShips.Values.Where(x => x.IsSunk).Select(x => x.Id);
+        return sunkShipIds.Contains(shipId);
+    }
 
     public IReadOnlyList<EnemyShipSummaryModel> GetSummary(BoardShips? enemyShips)
     {

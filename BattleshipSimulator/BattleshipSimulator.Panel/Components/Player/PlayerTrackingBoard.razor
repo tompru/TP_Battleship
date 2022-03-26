@@ -2,15 +2,18 @@
 
 @using BattleshipSimulator.Model.Boards
 @using BattleshipSimulator.Model.Squares
+@using BattleshipSimulator.Panel.Data
+
+@inject EnemyShipsService _enemyShipsService
 
 <Card>
     <table class="table-fixed table-bordered border-primary text-center">
         <thead>
         <tr>
-            <th class="board-cell"></th>
+            <th class="board-cell alert-info border-primary"></th>
             @foreach (var header in _colHeaders)
             {
-                <th class="user-select-none">@header</th>
+                <th class="user-select-none bg-info bg-opacity-25">@header</th>
             }
         </tr>
         </thead>
@@ -18,12 +21,13 @@
         @foreach (var (ordinate, squares) in _squaresByOrdinatesDict)
         {
             <tr>
-                <th class="board-cell user-select-none">@ordinate</th>
+                <th class="board-cell user-select-none bg-info bg-opacity-25">@ordinate</th>
                 @foreach (var square in squares)
                 {
                     var chanceToHit = Board.HitPropabilities?
                         .First(x => x.Coordinates == square.Coordinates).HitPropability.Value ?? default;
-                    <td>
+                    var isSunk = _enemyShipsService.CheckIfShipIsSunk(Board.EnemyShips, square.ShipId);
+                    <td class="@($"{(isSunk ? "bg-danger bg-opacity-25" : "")}")">
                         <BoardSquare IsMarked="@square.IsMarked"
                                      IsOccupied="@square.IsOccupied"
                                      ChanceToHit="@chanceToHit" />
