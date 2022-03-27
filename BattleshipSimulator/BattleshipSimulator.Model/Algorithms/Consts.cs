@@ -1,6 +1,4 @@
-﻿using BattleshipSimulator.Model.Algorithms.ShipsArrange;
-
-namespace BattleshipSimulator.Model.Algorithms
+﻿namespace BattleshipSimulator.Model.Algorithms
 {
     internal static class Consts
     {

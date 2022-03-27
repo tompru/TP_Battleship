@@ -6,6 +6,6 @@ namespace BattleshipSimulator.Model.Algorithms.HitPropability;
 public interface IHitPropabilityCalculator
 {
     IReadOnlyList<CoordinatesHitPropability> Calculate(
-        BoardShips enemyShips,
+        BoardShips? enemyShips,
         TrackingBoardSquares boardSquares);
 }

@@ -6,18 +6,19 @@ namespace BattleshipSimulator.Model.Algorithms.HitPropability;
 public class DummyHitPropabilityCalculator : IHitPropabilityCalculator
 {
     public IReadOnlyList<CoordinatesHitPropability> Calculate(
-        BoardShips enemyShips,
+        BoardShips? enemyShips,
         TrackingBoardSquares boardSquares)
     {
         var notMarkedSquares = boardSquares.Values.Where(x => x.IsMarked is false).ToList();
-        var notSunkEnemyShips = enemyShips.Values.Where(x => x.IsSunk is false).ToList();
 
-        if (notMarkedSquares.Count == 0)
+        if (enemyShips is null || notMarkedSquares.Count == 0)
         {
             return boardSquares.Values
                 .Select(x => new CoordinatesHitPropability(x.Coordinates, HitPropability.Zero()))
                 .ToList();
         }
+
+        var notSunkEnemyShips = enemyShips.Values.Where(x => x.IsSunk is false).ToList();
 
         var hitPropability = HitPropability.From(
             (decimal)notSunkEnemyShips.Sum(x => x.Size.Value - x.DamageTaken.Value) / notMarkedSquares.Count);
