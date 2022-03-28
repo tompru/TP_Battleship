@@ -7,6 +7,7 @@
 @inject EnemyShipsService _enemyShipsService
 
 <Card>
+    <h6>Tracking board</h6>
     <table class="table-fixed table-bordered border-primary text-center">
         <thead>
         <tr>
@@ -30,7 +31,7 @@
                     <td class="@($"{(isSunk ? "bg-danger bg-opacity-25" : "")}")">
                         <BoardSquare IsMarked="@square.IsMarked"
                                      IsOccupied="@square.IsOccupied"
-                                     ChanceToHit="@chanceToHit" />
+                                     ChanceToHit="@chanceToHit"/>
                     </td>
                 }
             </tr>
