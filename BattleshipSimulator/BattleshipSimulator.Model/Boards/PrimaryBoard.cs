@@ -20,7 +20,7 @@ public sealed class PrimaryBoard : Board
 
     public OperationResult<ShipId?> MarkHit(Coordinates coordinates)
     {
-        var field = _squares.TryGetByCoordinates(coordinates);
+        var field = _squares.GetByCoordinates(coordinates);
         if (field is null)
         {
             return new ErrorResult<ShipId?>($"Square of coordinates {coordinates} not found.");

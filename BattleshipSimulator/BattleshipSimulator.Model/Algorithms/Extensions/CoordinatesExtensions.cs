@@ -10,13 +10,13 @@ internal static class CoordinatesExtensions
         direction switch
         {
             Direction.Left => new Coordinates(
-                Ordinate.From(start.Ordinate.Value - (shipSize.Value - 1)), start.Abscissa),
+                Ordinate.From(start.Ordinate - (shipSize - 1)), start.Abscissa),
             Direction.Right => new Coordinates(
-                Ordinate.From(start.Ordinate.Value + (shipSize.Value - 1)), start.Abscissa),
+                Ordinate.From(start.Ordinate.Value + (shipSize - 1)), start.Abscissa),
             Direction.Up => new Coordinates(
-                start.Ordinate, Abscissa.From(start.Abscissa.Value + (shipSize.Value - 1))),
+                start.Ordinate, Abscissa.From(start.Abscissa + (shipSize - 1))),
             Direction.Down => new Coordinates(
-                start.Ordinate, Abscissa.From(start.Abscissa.Value - (shipSize.Value - 1))),
+                start.Ordinate, Abscissa.From(start.Abscissa - (shipSize - 1))),
             _ => throw new ArgumentOutOfRangeException()
         };
 }

@@ -14,41 +14,47 @@ public class ShipsRandomArranger : IShipArranger
 
     public PrimaryBoardSquares Arrange(BoardShips ships, BoardSize size)
     {
-        var squares = new PrimaryBoardSquares(size);
+        var boardSquares = new PrimaryBoardSquares(size);
 
         foreach (var ship in ships.Values)
         {
-            var placingShipInProgress = true;
-            while (placingShipInProgress)
+            PlaceShipOnBoardSquares(ship, boardSquares, size);
+        }
+
+        return boardSquares;
+    }
+
+    private static void PlaceShipOnBoardSquares(Ship ship, PrimaryBoardSquares boardSquares, BoardSize size)
+    {
+        var placingShipInProgress = true;
+        while (placingShipInProgress)
+        {
+            var startCoordinates = PickRandomCoordinates(size);
+
+            foreach (var direction in GetShuffledDirections())
             {
-                var startCoordinates = PickRandomCoordinates(size);
-                foreach (var direction in GetShuffledDirections())
+                var endCoordinates = startCoordinates.GetEndCoordinates(direction, ship.Size);
+                if (endCoordinates.IsValid(size) is false)
                 {
-                    var endCoordinates = startCoordinates.GetEndCoordinates(direction, ship.Size);
-                    if (endCoordinates.IsValid(size.Value) is false)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    var coordinates = Coordinates.GetCoordinatesBetween(startCoordinates, endCoordinates);
+                var coordinates = Coordinates.GetCoordinatesBetween(startCoordinates, endCoordinates);
 
-                    var placeShipResult = squares.PlaceShip(coordinates, ship);
-                    if (placeShipResult.Success)
-                    {
-                        placingShipInProgress = false;
-                        break;
-                    }
+                var placeShipResult = boardSquares.PlaceShip(coordinates, ship);
+                if (placeShipResult.Success)
+                {
+                    placingShipInProgress = false;
+                    break;
                 }
             }
         }
-
-        return squares;
     }
 
     private static Coordinates PickRandomCoordinates(BoardSize size)
     {
-        var ordinate = Ordinate.From(Random.Next(Coordinates.MinAxisValue, size.Value + 1));
-        var abscissa = Abscissa.From(Random.Next(Coordinates.MinAxisValue, size.Value + 1));
+        var ordinate = Ordinate.From(Random.Next(Coordinates.MinAxisValue, size + 1));
+        var abscissa = Abscissa.From(Random.Next(Coordinates.MinAxisValue, size + 1));
         return new Coordinates(ordinate, abscissa);
     }
 }

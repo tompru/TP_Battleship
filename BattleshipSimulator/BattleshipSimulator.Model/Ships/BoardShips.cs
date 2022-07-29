@@ -37,8 +37,6 @@ public class BoardShips
         return boardShips;
     }
 
-    private static IEnumerable<TShip> CreateShips<TShip>(int shipsCount) where TShip : Ship, new()
-    {
-        return Enumerable.Range(0, shipsCount).Select(_ => new TShip());
-    }
+    private static IEnumerable<TShip> CreateShips<TShip>(int shipsCount) where TShip : Ship, new() => 
+        Enumerable.Range(0, shipsCount).Select(_ => new TShip());
 }

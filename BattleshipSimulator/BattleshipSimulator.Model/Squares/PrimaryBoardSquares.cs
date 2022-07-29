@@ -13,7 +13,7 @@ public sealed class PrimaryBoardSquares : BoardSquares
     {
         var coordinatesList = coordinates.ToList();
 
-        if (coordinatesList.Count != ship.Size.Value)
+        if (coordinatesList.Count != ship.Size)
         {
             return new ErrorResult("Coordinates count doesnt equal ship size.");
         }

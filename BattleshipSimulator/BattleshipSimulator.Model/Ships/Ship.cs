@@ -8,12 +8,13 @@ public abstract class Ship
     protected Ship()
     {
         Id = ShipId.Create();
-        DamageTaken = ShipDamageTaken.CreateWithNoDamage();
+        DamageTaken = ShipDamageTaken.Zero;
     }
+
     public ShipId Id { get; }
     public abstract ShipSize Size { get; }
     public ShipDamageTaken DamageTaken { get; private set; }
-    public bool IsSunk => DamageTaken.Value >= Size.Value;
+    public bool IsSunk => DamageTaken >= Size;
 
     public OperationResult Hit()
     {

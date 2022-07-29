@@ -42,12 +42,12 @@ public sealed class TrackingBoard : Board
 
         var maxPropability = HitPropabilities!.Max(x => x.HitPropability.Value);
         var shuffledCoordinatesWithMaxPropability = HitPropabilities!
-            .Where(x => x.HitPropability.Value == maxPropability)
+            .Where(x => x.HitPropability == maxPropability)
             .OrderBy(_ => Guid.NewGuid());
 
         var coordinares = shuffledCoordinatesWithMaxPropability.First().Coordinates;
 
-        var square = Squares.TryGetByCoordinates(coordinares);
+        var square = Squares.GetByCoordinates(coordinares);
         if (square is null)
         {
             return new ErrorResult<Coordinates>($"Square of coordinates {coordinares} not found.");
@@ -58,7 +58,7 @@ public sealed class TrackingBoard : Board
 
     public OperationResult MarkAttackedField(Coordinates attackedCoordinates, ShipId? attackedShipId)
     {
-        var square = Squares.TryGetByCoordinates(attackedCoordinates);
+        var square = Squares.GetByCoordinates(attackedCoordinates);
         if (square is null)
         {
             return new ErrorResult<Coordinates>($"Square of coordinates {attackedCoordinates} not found.");
@@ -74,7 +74,7 @@ public sealed class TrackingBoard : Board
         return TryPlaceAttackedShipOnSquare(square, attackedShipId);
     }
 
-    private OperationResult TryPlaceAttackedShipOnSquare(Square square, ShipId? attackedShipId)
+    private static OperationResult TryPlaceAttackedShipOnSquare(Square square, ShipId? attackedShipId)
     {
         if (attackedShipId is null)
         {

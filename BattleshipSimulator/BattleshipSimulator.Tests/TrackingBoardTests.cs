@@ -84,7 +84,7 @@ public class TrackingBoardTests
 
         var result = board.MarkAttackedField(coordinates, ship.Id);
 
-        var square = board.Squares.TryGetByCoordinates(coordinates);
+        var square = board.Squares.GetByCoordinates(coordinates);
 
         result.Success.Should().BeTrue();
         square.Should().NotBeNull();

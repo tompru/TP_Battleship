@@ -6,9 +6,9 @@ namespace BattleshipSimulator.Panel.Data;
 public class EnemyShipsService
 {
     public int GetTotalSize(BoardShips? enemyShips) =>
-        enemyShips?.Values.Sum(x => x.Size.Value) ?? default;
+        enemyShips?.Values.Sum(x => x.Size) ?? default;
     public int GetTotalDamageTaken(BoardShips? enemyShips) =>
-        enemyShips?.Values.Sum(x => x.DamageTaken.Value) ?? default;
+        enemyShips?.Values.Sum(x => x.DamageTaken) ?? default;
 
     public bool CheckIfShipIsSunk(BoardShips? enemyShips, ShipId? shipId)
     {

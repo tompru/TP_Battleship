@@ -1,4 +1,5 @@
 using BattleshipSimulator.Model.Ships;
+using BattleshipSimulator.Model.Ships.Metadata;
 using FluentAssertions;
 using Xunit;
 
@@ -35,7 +36,7 @@ public class ShipTests
     {
         var ship = new Carrier();
 
-        ship.DamageTaken.Value.Should().Be(0);
+        ship.DamageTaken.Should().Be(ShipDamageTaken.Zero);
     }
 
     [Fact]

@@ -7,10 +7,7 @@ public record ShipDamageTaken(int Value) : IntValueObject<ShipDamageTaken>(Value
     private const int NoDamage = 0;
     private const int DamageValue = 1;
 
-    public static ShipDamageTaken CreateWithNoDamage()
-    {
-        return ShipDamageTaken.From(NoDamage);
-    }
+    public static ShipDamageTaken Zero => ShipDamageTaken.From(NoDamage);
 
     public ShipDamageTaken IncreaseDamage()
     {

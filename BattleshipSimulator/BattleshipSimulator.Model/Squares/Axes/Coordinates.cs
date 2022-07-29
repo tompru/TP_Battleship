@@ -6,8 +6,8 @@ public record Coordinates(Ordinate Ordinate, Abscissa Abscissa)
 
     public bool IsValid(int boardSize)
     {
-        return Ordinate.Value <= boardSize && Ordinate.Value >= MinAxisValue &&
-               Abscissa.Value <= boardSize && Abscissa.Value >= MinAxisValue;
+        return Ordinate.Value <= boardSize && Ordinate >= MinAxisValue &&
+               Abscissa.Value <= boardSize && Abscissa >= MinAxisValue;
     }
 
     public static List<Coordinates> GetCoordinatesBetween(Coordinates start, Coordinates end) =>
